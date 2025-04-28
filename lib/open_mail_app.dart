@@ -170,10 +170,7 @@ class OpenMailApp {
         String? launchScheme =
             installedApps.first.composeLaunchScheme(emailContent);
         if (launchScheme != null) {
-          result = await launch(
-            launchScheme,
-            forceSafariVC: false,
-          );
+          result = await launchUrl(Uri.parse(launchScheme));
         }
         return OpenMailAppResult(didOpen: result);
       } else {
@@ -209,10 +206,7 @@ class OpenMailApp {
     } else if (_isIOS) {
       String? launchScheme = mailApp.composeLaunchScheme(emailContent);
       if (launchScheme != null) {
-        return await launch(
-          launchScheme,
-          forceSafariVC: false,
-        );
+        return await launchUrl(Uri.parse(launchScheme));
       }
 
       return false;
@@ -232,10 +226,7 @@ class OpenMailApp {
           false;
       return result;
     } else if (_isIOS) {
-      return await launch(
-        mailApp.iosLaunchScheme,
-        forceSafariVC: false,
-      );
+      return await launchUrl(Uri.parse(mailApp.iosLaunchScheme));
     } else {
       throw Exception('Platform not supported');
     }
